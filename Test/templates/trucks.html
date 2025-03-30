@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список грузовиков</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lsit.css') }}">
+</head>
+<body>
+    <h1>Список грузовиков:</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Год</th>
+                <th>Производитель</th>
+                <th>Модель</th>
+                <th>Пробег</th>
+                <th>VIN</th>
+                <th>Действия</th> </tr>
+        </thead>
+        <tbody>
+            {% for truck in trucks %}
+                <tr data-truck-id="{{ truck._id }}">
+                    <td>{{ truck.year }}</td>
+                    <td>{{ truck.make }}</td>
+                    <td>{{ truck.model }}</td>
+                    <td>{{ truck.mileage }}</td>
+                    <td>{{ truck.vin }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm edit-btn" data-truck-id="{{ truck._id }}">Редактировать</button>
+                        <button class="btn btn-danger btn-sm delete-btn" data-truck-id="{{ truck._id }}">Удалить</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button id="addTruckBtn" class="btn btn-primary">Добавить грузовик</button>
+
+    <div id="addTruckModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Добавить новый грузовик</h2>
+            <form id="truckForm" action="/add_truck" method="post">
+                <div class="form-group">
+                    <label for="year">Год:</label>
+                    <input type="text" class="form-control" id="year" name="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="make">Производитель:</label>
+                    <input type="text" class="form-control" id="make" name="make" required>
+                </div>
+                <div class="form-group">
+                    <label for="model">Модель:</label>
+                    <input type="text" class="form-control" id="model" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label for="mileage">Пробег:</label>
+                    <input type="text" class="form-control" id="mileage" name="mileage" required>
+                </div>
+                <div class="form-group">
+                    <label for="vin">VIN:</label>
+                    <input type="text" class="form-control" id="vin" name="vin" required>
+                </div>
+                <input type="hidden" id="truck_id" name="truck_id">
+                <button type="submit" class="btn btn-success" id="save-button">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
