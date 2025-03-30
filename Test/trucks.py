@@ -26,14 +26,13 @@ except Exception as e:
     logging.error(f"Failed to connect to MongoDB: {e}")
     exit(1)
 
-UPLOAD_FOLDER = 'uploads'  # Определите папку для загрузки файлов
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}  # Определите разрешенные расширения файлов
-
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+TRUCK_TYPES = ['Пикап', 'Семи']  # Define the truck types
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @trucks_bp.route('/list', methods=['GET'])
 @login_required
@@ -42,13 +41,12 @@ def trucks_list():
         trucks = list(trucks_collection.find())
         for truck in trucks:
             truck['_id'] = str(truck['_id'])
-            if "file" not in truck:  # Добавлена проверка
+            if "file" not in truck:
                 truck["file"] = None
-        return render_template('trucks.html', trucks=trucks, username=current_user.username)
+        return render_template('trucks.html', trucks=trucks, username=current_user.username, truck_types=TRUCK_TYPES) #pass TRUCK_TYPES to template
     except Exception as e:
         logging.error(f"Error fetching trucks: {e}")
-        return render_template('error.html', message=f"Failed to retrieve truck list. Error: {e}")  # Изменено
-
+        return render_template('error.html', message=f"Failed to retrieve truck list. Error: {e}")
 
 @trucks_bp.route('/add_truck', methods=['POST'])
 @requires_role('admin')
@@ -75,7 +73,8 @@ def add_truck():
                 'model': request.form.get('model'),
                 'mileage': request.form.get('mileage'),
                 'vin': request.form.get('vin'),
-                'file': file_url
+                'file': file_url,
+                'type': request.form.get('type') #get truck type from form
             }
             trucks_collection.insert_one(truck_data)
             return redirect(url_for('trucks.trucks_list'))
@@ -84,13 +83,12 @@ def add_truck():
             logging.error(traceback.format_exc())
             return render_template('error.html', message="Failed to add truck")
 
-
 @trucks_bp.route('/edit_truck/<truck_id>', methods=['POST'])
 @requires_role('admin')
 def edit_truck(truck_id):
     if request.method == 'POST':
         try:
-            file_url = request.form.get('existing_file')  # Получаем url существующего файла
+            file_url = request.form.get('existing_file')
             if 'file' in request.files:
                 file = request.files['file']
                 if file and allowed_file(file.filename):
@@ -110,7 +108,8 @@ def edit_truck(truck_id):
                 'model': request.form.get('model'),
                 'mileage': request.form.get('mileage'),
                 'vin': request.form.get('vin'),
-                'file': file_url
+                'file': file_url,
+                'type': request.form.get('type') #get truck type from form
             }
             trucks_collection.update_one({'_id': ObjectId(truck_id)}, {'$set': updated_data})
             return redirect(url_for('trucks.trucks_list'))
@@ -118,7 +117,6 @@ def edit_truck(truck_id):
             logging.error(f"Error updating truck: {e}")
             logging.error(traceback.format_exc())
             return render_template('error.html', message="Failed to edit truck")
-
 
 @trucks_bp.route('/delete_truck/<truck_id>', methods=['POST'])
 @requires_role('admin')

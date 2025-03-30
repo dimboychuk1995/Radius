@@ -11,6 +11,7 @@
                 <th>Пробег</th>
                 <th>VIN</th>
                 <th>Файл</th>
+                <th>Тип</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                             Нет файла
                         {% endif %}
                     </td>
+                    <td>{{ truck.type }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm edit-btn" data-truck-id="{{ truck._id }}">Редактировать</button>
                         <button class="btn btn-danger btn-sm delete-btn" data-truck-id="{{ truck._id }}">Удалить</button>
@@ -68,6 +70,14 @@
                 <div class="form-group">
                     <label for="file">Файл:</label>
                     <input type="file" class="form-control-file" id="file" name="file">
+                </div>
+                <div class="form-group">
+                    <label for="type">Тип:</label>
+                    <select class="form-control" id="type" name="type" required>
+                        {% for truck_type in truck_types %}
+                            <option value="{{ truck_type }}">{{ truck_type }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <input type="hidden" id="truck_id" name="truck_id">
                 <input type="hidden" id="existing_file" name="existing_file">

@@ -18,7 +18,7 @@ var driverSaveButton = document.getElementById("save-button");
 
 // Функции для грузовиков
 if (addTruckBtn) {
-    addTruckBtn.onclick = function() {
+    addTruckBtn.onclick = function () {
         truckModalTitle.textContent = "Добавить новый грузовик";
         truckForm.action = "/add_truck";
         document.getElementById("year").value = "";
@@ -26,6 +26,8 @@ if (addTruckBtn) {
         document.getElementById("model").value = "";
         document.getElementById("mileage").value = "";
         document.getElementById("vin").value = "";
+        document.getElementById("file").value = "";
+        document.getElementById("type").value = "";
         document.getElementById("truck_id").value = "";
         truckSaveButton.textContent = "Сохранить";
         truckModal.style.display = "block";
@@ -41,12 +43,17 @@ function openEditTruckModal(truckId) {
     var model = truckRow.cells[2].textContent;
     var mileage = truckRow.cells[3].textContent;
     var vin = truckRow.cells[4].textContent;
+    var file = truckRow.cells[5].querySelector('a') ? truckRow.cells[5].querySelector('a').href : ""; // Получаем URL файла
+    var type = truckRow.cells[6].textContent; // Get truck type
 
     document.getElementById("year").value = year;
     document.getElementById("make").value = make;
     document.getElementById("model").value = model;
     document.getElementById("mileage").value = mileage;
     document.getElementById("vin").value = vin;
+    document.getElementById("file").value = ""; // Очищаем поле файла при редактировании
+    document.getElementById("existing_file").value = file; // Сохраняем URL существующего файла
+    document.getElementById("type").value = type; // Set selected truck type
     document.getElementById("truck_id").value = truckId;
 
     truckModalTitle.textContent = "Редактировать грузовик";
@@ -60,27 +67,27 @@ function deleteTruck(truckId) {
         fetch('/delete_truck/' + truckId, {
             method: 'POST'
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                var truckRow = document.querySelector('tr[data-truck-id="' + truckId + '"]');
-                if (truckRow) {
-                    truckRow.remove();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var truckRow = document.querySelector('tr[data-truck-id="' + truckId + '"]');
+                    if (truckRow) {
+                        truckRow.remove();
+                    }
+                    truckModal.style.display = "none";
+                } else {
+                    alert('Ошибка удаления грузовика: ' + data.error);
                 }
-                truckModal.style.display = "none";
-            } else {
-                alert('Ошибка удаления грузовика: ' + data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Произошла ошибка при удалении грузовика.');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Произошла ошибка при удалении грузовика.');
+            });
     }
 }
 
 if (truckTable) {
-    truckTable.addEventListener('click', function(event) {
+    truckTable.addEventListener('click', function (event) {
         var target = event.target;
         if (target.classList.contains('edit-btn')) {
             var truckId = target.getAttribute('data-truck-id');
@@ -93,14 +100,14 @@ if (truckTable) {
 }
 
 if (truckSpan) {
-    truckSpan.onclick = function() {
+    truckSpan.onclick = function () {
         truckModal.style.display = "none";
     };
 }
 
 // Функции для водителей
 if (addDriverBtn) {
-    addDriverBtn.onclick = function() {
+    addDriverBtn.onclick = function () {
         driverModalTitle.textContent = "Добавить нового водителя";
         driverForm.action = "/add_driver";
         document.getElementById("name").value = "";
@@ -136,27 +143,27 @@ function deleteDriver(driverId) {
         fetch('/delete_driver/' + driverId, {
             method: 'POST'
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                var driverRow = document.querySelector('tr[data-driver-id="' + driverId + '"]');
-                if (driverRow) {
-                    driverRow.remove();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var driverRow = document.querySelector('tr[data-driver-id="' + driverId + '"]');
+                    if (driverRow) {
+                        driverRow.remove();
+                    }
+                    driverModal.style.display = "none";
+                } else {
+                    alert('Ошибка удаления водителя: ' + data.error);
                 }
-                driverModal.style.display = "none";
-            } else {
-                alert('Ошибка удаления водителя: ' + data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Произошла ошибка при удалении водителя.');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Произошла ошибка при удалении водителя.');
+            });
     }
 }
 
 if (driverTable) {
-    driverTable.addEventListener('click', function(event) {
+    driverTable.addEventListener('click', function (event) {
         var target = event.target;
         if (target.classList.contains('edit-btn')) {
             var driverId = target.getAttribute('data-driver-id');
@@ -169,7 +176,7 @@ if (driverTable) {
 }
 
 if (driverSpan) {
-    driverSpan.onclick = function() {
+    driverSpan.onclick = function () {
         driverModal.style.display = "none";
     };
 }

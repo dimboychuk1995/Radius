@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import logging
-from flask_login import login_required
+from flask_login import login_required, current_user
+
 from Test.auth import requires_role
 
 # Настраиваем логирование
@@ -35,6 +36,7 @@ def drivers_list():
         logging.error(f"Error fetching drivers: {e}")
         return render_template('error.html', message="Failed to retrieve drivers list")
 
+
 @drivers_bp.route('/add_driver', methods=['POST'])
 @requires_role('admin')
 def add_driver():
@@ -51,6 +53,7 @@ def add_driver():
             logging.error(f"Error adding driver: {e}")
             return render_template('error.html', message="Failed to add driver")
 
+
 @drivers_bp.route('/edit_driver/<driver_id>', methods=['POST'])
 @requires_role('admin')
 def edit_driver(driver_id):
@@ -66,6 +69,7 @@ def edit_driver(driver_id):
         except Exception as e:
             logging.error(f"Error updating driver: {e}")
             return render_template('error.html', message="Failed to edit driver")
+
 
 @drivers_bp.route('/delete_driver/<driver_id>', methods=['POST'])
 @requires_role('admin')
