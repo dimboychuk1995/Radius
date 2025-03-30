@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Список водителей{% endblock %}
+{% block content %}
+    <h1>Список водителей:</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Номер лицензии</th>
+                <th>Номер контакта</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in drivers %}
+                <tr data-driver-id="{{ driver._id }}">
+                    <td>{{ driver.name }}</td>
+                    <td>{{ driver.license_number }}</td>
+                    <td>{{ driver.contact_number }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm edit-btn" data-driver-id="{{ driver._id }}">Редактировать</button>
+                        <button class="btn btn-danger btn-sm delete-btn" data-driver-id="{{ driver._id }}">Удалить</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button id="addDriverBtn" class="btn btn-primary">Добавить водителя</button>
+
+    <div id="addDriverModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Добавить нового водителя</h2>
+            <form id="driverForm" action="/add_driver" method="post">
+                <div class="form-group">
+                    <label for="name">Имя:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="license_number">Номер лицензии:</label>
+                    <input type="text" class="form-control" id="license_number" name="license_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact_number">Номер контакта:</label>
+                    <input type="text" class="form-control" id="contact_number" name="contact_number" required>
+                </div>
+                <input type="hidden" id="driver_id" name="driver_id">
+                <button type="submit" class="btn btn-success" id="save-button">Сохранить</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

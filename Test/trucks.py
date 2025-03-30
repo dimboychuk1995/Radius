@@ -1,4 +1,3 @@
-# trucks.py
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, session, g
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -24,9 +23,7 @@ except Exception as e:
     logging.error(f"Failed to connect to MongoDB: {e}")
     exit(1)
 
-
-
-@trucks_bp.route('/', methods=['GET'])
+@trucks_bp.route('/list', methods=['GET']) #Изменено
 @login_required
 def trucks_list():
     try:
