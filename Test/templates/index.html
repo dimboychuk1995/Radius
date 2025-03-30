@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+    <h1>Добро пожаловать, {{ username }}!</h1>
+    <p>Это главная страница вашего приложения.  Вы можете перейти в раздел <a href="{{ url_for('trucks.trucks_list') }}">грузовиков</a>.</p>
+{% endblock %}

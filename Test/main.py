@@ -1,6 +1,9 @@
 # main.py
 from flask import Flask, render_template, session, redirect, url_for
 import logging
+
+from flask_login import current_user
+
 from auth import auth_bp, login_manager  # Import login_manager
 from trucks import trucks_bp # Import trucks_bp
 
@@ -22,7 +25,7 @@ def internal_server_error(e):
 
 @app.route('/')
 def index():
-    if 'user_id' in session:
+    if current_user.is_authenticated:
         return redirect(url_for('trucks.trucks_list'))
     else:
         return redirect(url_for('auth.login'))

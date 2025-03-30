@@ -89,13 +89,15 @@ def login():
 
         if user_data and check_password_hash(user_data['password'], password):
             user = User(user_data)
-            login_user(user)  # Используем функцию Flask-Login для логина
+            login_user(user)
             flash('Успешный вход!', 'success')
-            return redirect(request.args.get('next') or url_for('trucks.trucks_list'))
+            return redirect(url_for('trucks.trucks_list'))  # Изменено
         else:
             flash('Неверное имя пользователя или пароль', 'danger')
             return render_template('login.html')
     return render_template('login.html')
+
+
 
 @auth_bp.route('/logout')
 @login_required
