@@ -2,7 +2,7 @@
 var modal = document.getElementById("addTruckModal");
 var addTruckBtn = document.getElementById("addTruckBtn");
 var span = document.getElementsByClassName("close")[0];
-var truckTable = document.querySelector("table");  // Получаем таблицу
+var truckTable = document.querySelector("table");
 var modalTitle = document.getElementById("modal-title");
 var truckForm = document.getElementById("truckForm");
 var saveButton = document.getElementById("save-button");
@@ -16,16 +16,14 @@ addTruckBtn.onclick = function() {
     document.getElementById("model").value = "";
     document.getElementById("mileage").value = "";
     document.getElementById("vin").value = "";
-    document.getElementById("truck_id").value = ""; // Clear truck ID
+    document.getElementById("truck_id").value = "";
     saveButton.textContent = "Сохранить";
     modal.style.display = "block";
 }
 
-
-
 // Функция для открытия модального окна для редактирования
 function openEditModal(truckId) {
-    var truckRow = document.querySelector('tr[data-truck-id="' + truckId + '"]'); // Находим строку по ID
+    var truckRow = document.querySelector('tr[data-truck-id="' + truckId + '"]');
     if (!truckRow) return;
 
     var year = truckRow.cells[0].textContent;
@@ -53,18 +51,16 @@ function deleteTruck(truckId) {
         fetch('/delete_truck/' + truckId, {
             method: 'POST'
         })
-        .then(response => response.json()) // Получаем JSON ответ
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Удаляем строку из таблицы
                 var truckRow = document.querySelector('tr[data-truck-id="' + truckId + '"]');
                 if (truckRow) {
                     truckRow.remove();
                 }
-                modal.style.display = "none"; // Hide modal after successful deletion
-
+                modal.style.display = "none";
             } else {
-                alert('Ошибка удаления грузовика.');
+                alert('Ошибка удаления грузовика: ' + data.error);
             }
         })
         .catch(error => {
@@ -73,8 +69,6 @@ function deleteTruck(truckId) {
         });
     }
 }
-
-
 
 // Делегирование событий для кнопок "Редактировать" и "Удалить"
 truckTable.addEventListener('click', function(event) {
@@ -87,7 +81,6 @@ truckTable.addEventListener('click', function(event) {
         deleteTruck(truckId);
     }
 });
-
 
 // Когда пользователь нажимает на <span> (x), закрываем модальное окно
 span.onclick = function() {

@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Список грузовиков</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lsit.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Список грузовиков{% endblock %}
+{% block content %}
     <h1>Список грузовиков:</h1>
     <table class="table table-striped">
         <thead>
@@ -15,7 +10,8 @@
                 <th>Модель</th>
                 <th>Пробег</th>
                 <th>VIN</th>
-                <th>Действия</th> </tr>
+                <th>Действия</th>
+            </tr>
         </thead>
         <tbody>
             {% for truck in trucks %}
@@ -66,7 +62,4 @@
             </form>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-</html>
+{% endblock %}
