@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45716bb7-83a8-4eaf-a1fb-d8137e55a677" name="Changes" comment="added trucks block on header">
-      <change afterPath="$PROJECT_DIR$/Test/drivers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test/templates/drivers.html" afterDir="false" />
+    <list default="true" id="45716bb7-83a8-4eaf-a1fb-d8137e55a677" name="Changes" comment="No trucks list on Main page, added blocks Trucks and Drivers on Main Page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Test/static/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/templates/trucks.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/trucks.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/trucks.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/trucks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,27 +81,7 @@
     <configuration name="base.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Radius/Test/templates/base.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="auth" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Radius" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test/auth.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+    <configuration name="trucks.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Radius/Test/templates/trucks.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="drivers" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -203,10 +179,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.trucks (1)" />
+        <item itemvalue="JavaScript Debug.trucks.html" />
         <item itemvalue="Python.drivers" />
         <item itemvalue="JavaScript Debug.base.html" />
-        <item itemvalue="Python.trucks (1)" />
-        <item itemvalue="Python.auth" />
       </list>
     </recent_temporary>
   </component>
@@ -227,7 +203,7 @@
       <option name="presentableId" value="Default" />
       <updated>1743282833366</updated>
       <workItem from="1743282834454" duration="11447000" />
-      <workItem from="1743356471284" duration="3752000" />
+      <workItem from="1743356471284" duration="4612000" />
     </task>
     <task id="LOCAL-00001" summary="Initial">
       <option name="closed" value="true" />
@@ -261,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743362202253</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="No trucks list on Main page, added blocks Trucks and Drivers on Main Page">
+      <option name="closed" value="true" />
+      <created>1743364061947</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743364061947</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,12 +254,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial" />
     <MESSAGE value="added trucks block on header" />
-    <option name="LAST_COMMIT_MESSAGE" value="added trucks block on header" />
+    <MESSAGE value="No trucks list on Main page, added blocks Trucks and Drivers on Main Page" />
+    <option name="LAST_COMMIT_MESSAGE" value="No trucks list on Main page, added blocks Trucks and Drivers on Main Page" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Radius$drivers.coverage" NAME="drivers Coverage Results" MODIFIED="1743362532545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
-    <SUITE FILE_PATH="coverage/Radius$main.coverage" NAME="main Coverage Results" MODIFIED="1743363486555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
-    <SUITE FILE_PATH="coverage/Radius$trucks__1_.coverage" NAME="trucks (1) Coverage Results" MODIFIED="1743356485211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
+    <SUITE FILE_PATH="coverage/Radius$main.coverage" NAME="main Coverage Results" MODIFIED="1743364443988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
+    <SUITE FILE_PATH="coverage/Radius$trucks__1_.coverage" NAME="trucks (1) Coverage Results" MODIFIED="1743364440726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$fleet__1_.coverage" NAME="fleet (1) Coverage Results" MODIFIED="1743308179294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$Init.coverage" NAME="Init Coverage Results" MODIFIED="1743284274829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$auth.coverage" NAME="auth Coverage Results" MODIFIED="1743356488257" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
