@@ -3,15 +3,20 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <h2>Грузовики</h2>
                 <p>Управление списком грузовиков.</p>
                 <a href="/trucks" class="btn btn-primary">Перейти к грузовикам</a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <h2>Водители</h2>
                 <p>Управление списком водителей.</p>
                 <a href="{{ url_for('drivers.drivers_list') }}" class="btn btn-primary">Перейти к водителям</a>
+            </div>
+            <div class="col-md-4">
+                <h2>Диспетчер</h2>
+                <p>Функции диспетчера.</p>
+                <a href="#" class="btn btn-primary">Перейти к диспетчеру</a>
             </div>
         </div>
     </div>
