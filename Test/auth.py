@@ -38,7 +38,7 @@ class User(UserMixin):
         self.username = user_data['username']
         self.password = user_data['password']
         self.role = user_data['role']
-        self.company = user_data.get('company') # Изменено: получаем компанию
+        self.company = user_data.get('company')
 
     @staticmethod
     def get(user_id):
@@ -53,16 +53,16 @@ def load_user(user_id):
     return User.get(user_id)
 
 # Функция для добавления пользователя
-def add_user(username, password, role="user", company=None): # Изменено: добавлен параметр company
+def add_user(username, password, role="user", company=None):
     hashed_password = generate_password_hash(password)
-    user = {'username': username, 'password': hashed_password, 'role': role, 'company': company} # Изменено: сохраняем компанию
+    user = {'username': username, 'password': hashed_password, 'role': role, 'company': company}
     users_collection.insert_one(user)
 
 # Создаем пользователей при первом запуске (если их еще нет)
 if users_collection.find_one({'username': 'admin'}) is None:
-    add_user('admin', 'password', 'admin', 'UWC') # Изменено: добавлена компания
+    add_user('admin', 'password', 'admin', 'UWC')
 if users_collection.find_one({'username': 'user'}) is None:
-    add_user('user', 'password', 'user', 'UWC') # Изменено: добавлена компания
+    add_user('user', 'password', 'user', 'UWC')
 
 # Функция для проверки роли пользователя
 def requires_role(role):
@@ -92,7 +92,7 @@ def login():
             user = User(user_data)
             login_user(user)
             flash('Успешный вход!', 'success')
-            return redirect(request.args.get('next') or url_for('trucks.trucks_list'))
+            return redirect(request.args.get('next') or url_for('index'))  # Изменено на 'index'
         else:
             flash('Неверное имя пользователя или пароль', 'danger')
             return render_template('login.html')
@@ -122,11 +122,11 @@ def add_user_route():
         username = request.form['username']
         password = request.form['password']
         role = request.form['role']
-        company = request.form.get('company') # Изменено: получаем компанию из формы
+        company = request.form.get('company')
         if role not in USER_ROLES:
             flash('Недопустимая роль пользователя.', 'danger')
             return redirect(url_for('auth.users_list'))
-        add_user(username, password, role, company) # Изменено: передаем компанию
+        add_user(username, password, role, company)
         flash('Пользователь успешно добавлен.', 'success')
         return redirect(url_for('auth.users_list'))
     return render_template('add_user.html', user_roles=USER_ROLES)
