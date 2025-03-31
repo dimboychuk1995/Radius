@@ -30,27 +30,32 @@ except Exception as e:
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 TRUCK_TYPES = ['Пикап', 'Семи']
 
+
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @trucks_bp.route('/list', methods=['GET'])
 @login_required
 def trucks_list():
     try:
-        trucks = list(trucks_collection.find())
+        # Изменено: фильтрация по компании
+        trucks = list(trucks_collection.find({'company': current_user.company}))
         for truck in trucks:
             truck['_id'] = str(truck['_id'])
             if "file_data" not in truck:
                 truck["file_data"] = None
                 truck["file_name"] = None
                 truck["file_mimetype"] = None
-            if "unit_number" not in truck:  # Добавлено
+            if "unit_number" not in truck:
                 truck["unit_number"] = None
+            if "company" not in truck:
+                truck["company"] = None
         return render_template('trucks.html', trucks=trucks, username=current_user.username, truck_types=TRUCK_TYPES)
     except Exception as e:
         logging.error(f"Error fetching trucks: {e}")
         return render_template('error.html', message=f"Failed to retrieve truck list. Error: {e}")
+
 
 @trucks_bp.route('/add_truck', methods=['POST'])
 @requires_role('admin')
@@ -77,7 +82,8 @@ def add_truck():
                 'file_name': file_name,
                 'file_mimetype': file_mimetype,
                 'type': request.form.get('type'),
-                'unit_number': request.form.get('unit_number')  # Добавлено
+                'unit_number': request.form.get('unit_number'),
+                'company': current_user.company
             }
             trucks_collection.insert_one(truck_data)
             return redirect(url_for('trucks.trucks_list'))
@@ -85,6 +91,7 @@ def add_truck():
             logging.error(f"Error adding truck: {e}")
             logging.error(traceback.format_exc())
             return render_template('error.html', message="Failed to add truck")
+
 
 @trucks_bp.route('/edit_truck/<truck_id>', methods=['POST'])
 @requires_role('admin')
@@ -111,7 +118,8 @@ def edit_truck(truck_id):
                 'file_name': file_name,
                 'file_mimetype': file_mimetype,
                 'type': request.form.get('type'),
-                'unit_number': request.form.get('unit_number')  # Добавлено
+                'unit_number': request.form.get('unit_number'),
+                'company': current_user.company
             }
             trucks_collection.update_one({'_id': ObjectId(truck_id)}, {'$set': updated_data})
             return redirect(url_for('trucks.trucks_list'))
@@ -119,6 +127,7 @@ def edit_truck(truck_id):
             logging.error(f"Error updating truck: {e}")
             logging.error(traceback.format_exc())
             return render_template('error.html', message="Failed to edit truck")
+
 
 @trucks_bp.route('/delete_truck/<truck_id>', methods=['POST'])
 @requires_role('admin')
@@ -129,6 +138,7 @@ def delete_truck(truck_id):
     except Exception as e:
         logging.error(f"Error deleting truck: {e}")
         return jsonify({'success': False, 'error': 'Failed to delete truck'})
+
 
 @trucks_bp.route('/get_file/<truck_id>')
 @login_required

@@ -28,9 +28,12 @@ except Exception as e:
 @login_required
 def drivers_list():
     try:
-        drivers = list(drivers_collection.find())
+        # Изменено: фильтрация по компании
+        drivers = list(drivers_collection.find({'company': current_user.company}))
         for driver in drivers:
             driver['_id'] = str(driver['_id'])
+            if "company" not in driver:
+                driver["company"] = None
         return render_template('drivers.html', drivers=drivers)
     except Exception as e:
         logging.error(f"Error fetching drivers: {e}")
@@ -45,7 +48,8 @@ def add_driver():
             driver_data = {
                 'name': request.form.get('name'),
                 'license_number': request.form.get('license_number'),
-                'contact_number': request.form.get('contact_number')
+                'contact_number': request.form.get('contact_number'),
+                'company': current_user.company
             }
             drivers_collection.insert_one(driver_data)
             return redirect(url_for('drivers.drivers_list'))
@@ -62,7 +66,8 @@ def edit_driver(driver_id):
             updated_data = {
                 'name': request.form.get('name'),
                 'license_number': request.form.get('license_number'),
-                'contact_number': request.form.get('contact_number')
+                'contact_number': request.form.get('contact_number'),
+                'company': current_user.company
             }
             drivers_collection.update_one({'_id': ObjectId(driver_id)}, {'$set': updated_data})
             return redirect(url_for('drivers.drivers_list'))
