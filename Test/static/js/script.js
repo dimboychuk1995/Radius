@@ -28,6 +28,7 @@ if (addTruckBtn) {
         document.getElementById("vin").value = "";
         document.getElementById("file").value = "";
         document.getElementById("type").value = "";
+        document.getElementById("unit_number").value = "";
         document.getElementById("truck_id").value = "";
         truckSaveButton.textContent = "Сохранить";
         truckModal.style.display = "block";
@@ -43,17 +44,17 @@ function openEditTruckModal(truckId) {
     var model = truckRow.cells[2].textContent;
     var mileage = truckRow.cells[3].textContent;
     var vin = truckRow.cells[4].textContent;
-    var file = truckRow.cells[5].querySelector('a') ? truckRow.cells[5].querySelector('a').href : ""; // Получаем URL файла
-    var type = truckRow.cells[6].textContent; // Get truck type
+    var type = truckRow.cells[6].textContent;
+    var unitNumber = truckRow.cells[7].textContent; // Получаем unit number
 
     document.getElementById("year").value = year;
     document.getElementById("make").value = make;
     document.getElementById("model").value = model;
     document.getElementById("mileage").value = mileage;
     document.getElementById("vin").value = vin;
-    document.getElementById("file").value = ""; // Очищаем поле файла при редактировании
-    document.getElementById("existing_file").value = file; // Сохраняем URL существующего файла
-    document.getElementById("type").value = type; // Set selected truck type
+    document.getElementById("file").value = "";
+    document.getElementById("type").value = type;
+    document.getElementById("unit_number").value = unitNumber;
     document.getElementById("truck_id").value = truckId;
 
     truckModalTitle.textContent = "Редактировать грузовик";

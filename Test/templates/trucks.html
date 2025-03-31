@@ -12,6 +12,7 @@
                 <th>VIN</th>
                 <th>Файл</th>
                 <th>Тип</th>
+                <th>Unit Number</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -24,13 +25,14 @@
                     <td>{{ truck.mileage }}</td>
                     <td>{{ truck.vin }}</td>
                     <td>
-                        {% if truck.file %}
-                            <a href="{{ truck.file }}" target="_blank">Файл</a>
+                        {% if truck.file_data %}
+                            <a href="{{ url_for('trucks.get_file', truck_id=truck._id) }}" target="_blank">{{ truck.file_name or 'Файл' }}</a>
                         {% else %}
                             Нет файла
                         {% endif %}
                     </td>
                     <td>{{ truck.type }}</td>
+                    <td>{{ truck.unit_number }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm edit-btn" data-truck-id="{{ truck._id }}">Редактировать</button>
                         <button class="btn btn-danger btn-sm delete-btn" data-truck-id="{{ truck._id }}">Удалить</button>
@@ -79,8 +81,11 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="unit_number">Unit Number:</label>
+                    <input type="text" class="form-control" id="unit_number" name="unit_number" required>
+                </div>
                 <input type="hidden" id="truck_id" name="truck_id">
-                <input type="hidden" id="existing_file" name="existing_file">
                 <button type="submit" class="btn btn-success" id="save-button">Сохранить</button>
             </form>
         </div>

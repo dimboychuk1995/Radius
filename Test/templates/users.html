@@ -9,6 +9,7 @@
                 <th>ID</th>
                 <th>Имя пользователя</th>
                 <th>Роль</th>
+                <th>Компания</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                     <td>{{ user._id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.role }}</td>
+                    <td>{{ user.company }}</td>
                     <td>
                         <form method="post" action="{{ url_for('auth.delete_user', user_id=user._id) }}"
                               onsubmit="return confirm('Вы уверены, что хотите удалить этого пользователя?')">

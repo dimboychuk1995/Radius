@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45716bb7-83a8-4eaf-a1fb-d8137e55a677" name="Changes" comment="Added opportunitie add files to trucks">
+    <list default="true" id="45716bb7-83a8-4eaf-a1fb-d8137e55a677" name="Changes" comment="added dispatch block">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/Test/static/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/templates/add_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/add_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/templates/trucks.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/trucks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/templates/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/Test/templates/users.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/trucks.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test/trucks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743364932149</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added dispatch block">
+      <option name="closed" value="true" />
+      <created>1743386345053</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743386345053</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,11 +275,12 @@
     <MESSAGE value="added trucks block on header" />
     <MESSAGE value="No trucks list on Main page, added blocks Trucks and Drivers on Main Page" />
     <MESSAGE value="Added opportunitie add files to trucks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added opportunitie add files to trucks" />
+    <MESSAGE value="added dispatch block" />
+    <option name="LAST_COMMIT_MESSAGE" value="added dispatch block" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Radius$drivers.coverage" NAME="drivers Coverage Results" MODIFIED="1743365079904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
-    <SUITE FILE_PATH="coverage/Radius$main.coverage" NAME="main Coverage Results" MODIFIED="1743386039318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
+    <SUITE FILE_PATH="coverage/Radius$main.coverage" NAME="main Coverage Results" MODIFIED="1743387293719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$trucks__1_.coverage" NAME="trucks (1) Coverage Results" MODIFIED="1743372188062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$fleet__1_.coverage" NAME="fleet (1) Coverage Results" MODIFIED="1743308179294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
     <SUITE FILE_PATH="coverage/Radius$Init.coverage" NAME="Init Coverage Results" MODIFIED="1743284274829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />

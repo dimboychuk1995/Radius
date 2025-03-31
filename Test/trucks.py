@@ -1,11 +1,12 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, current_app, send_file
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import logging
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import traceback
+from io import BytesIO
 
 from Test.auth import requires_role
 
@@ -26,9 +27,8 @@ except Exception as e:
     logging.error(f"Failed to connect to MongoDB: {e}")
     exit(1)
 
-UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-TRUCK_TYPES = ['Пикап', 'Семи']  # Define the truck types
+TRUCK_TYPES = ['Пикап', 'Семи']
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -41,9 +41,13 @@ def trucks_list():
         trucks = list(trucks_collection.find())
         for truck in trucks:
             truck['_id'] = str(truck['_id'])
-            if "file" not in truck:
-                truck["file"] = None
-        return render_template('trucks.html', trucks=trucks, username=current_user.username, truck_types=TRUCK_TYPES) #pass TRUCK_TYPES to template
+            if "file_data" not in truck:
+                truck["file_data"] = None
+                truck["file_name"] = None
+                truck["file_mimetype"] = None
+            if "unit_number" not in truck:  # Добавлено
+                truck["unit_number"] = None
+        return render_template('trucks.html', trucks=trucks, username=current_user.username, truck_types=TRUCK_TYPES)
     except Exception as e:
         logging.error(f"Error fetching trucks: {e}")
         return render_template('error.html', message=f"Failed to retrieve truck list. Error: {e}")
@@ -53,19 +57,15 @@ def trucks_list():
 def add_truck():
     if request.method == 'POST':
         try:
-            file_url = None
+            file_data = None
+            file_name = None
+            file_mimetype = None
             if 'file' in request.files:
                 file = request.files['file']
                 if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file_path = os.path.join(current_app.root_path, UPLOAD_FOLDER, filename)
-                    try:
-                        file.save(file_path)
-                        file_url = f'/{UPLOAD_FOLDER}/{filename}'
-                    except Exception as e:
-                        logging.error(f"Error saving file: {e}")
-                        logging.error(traceback.format_exc())
-                        return render_template("error.html", message=f"Ошибка сохранения файла. {e}")
+                    file_name = secure_filename(file.filename)
+                    file_mimetype = file.mimetype
+                    file_data = file.read()
 
             truck_data = {
                 'year': request.form.get('year'),
@@ -73,8 +73,11 @@ def add_truck():
                 'model': request.form.get('model'),
                 'mileage': request.form.get('mileage'),
                 'vin': request.form.get('vin'),
-                'file': file_url,
-                'type': request.form.get('type') #get truck type from form
+                'file_data': file_data,
+                'file_name': file_name,
+                'file_mimetype': file_mimetype,
+                'type': request.form.get('type'),
+                'unit_number': request.form.get('unit_number')  # Добавлено
             }
             trucks_collection.insert_one(truck_data)
             return redirect(url_for('trucks.trucks_list'))
@@ -88,19 +91,15 @@ def add_truck():
 def edit_truck(truck_id):
     if request.method == 'POST':
         try:
-            file_url = request.form.get('existing_file')
+            file_data = None
+            file_name = None
+            file_mimetype = None
             if 'file' in request.files:
                 file = request.files['file']
                 if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file_path = os.path.join(current_app.root_path, UPLOAD_FOLDER, filename)
-                    try:
-                        file.save(file_path)
-                        file_url = f'/{UPLOAD_FOLDER}/{filename}'
-                    except Exception as e:
-                        logging.error(f"Error saving file: {e}")
-                        logging.error(traceback.format_exc())
-                        return render_template("error.html", message=f"Ошибка сохранения файла. {e}")
+                    file_name = secure_filename(file.filename)
+                    file_mimetype = file.mimetype
+                    file_data = file.read()
 
             updated_data = {
                 'year': request.form.get('year'),
@@ -108,8 +107,11 @@ def edit_truck(truck_id):
                 'model': request.form.get('model'),
                 'mileage': request.form.get('mileage'),
                 'vin': request.form.get('vin'),
-                'file': file_url,
-                'type': request.form.get('type') #get truck type from form
+                'file_data': file_data,
+                'file_name': file_name,
+                'file_mimetype': file_mimetype,
+                'type': request.form.get('type'),
+                'unit_number': request.form.get('unit_number')  # Добавлено
             }
             trucks_collection.update_one({'_id': ObjectId(truck_id)}, {'$set': updated_data})
             return redirect(url_for('trucks.trucks_list'))
@@ -127,3 +129,19 @@ def delete_truck(truck_id):
     except Exception as e:
         logging.error(f"Error deleting truck: {e}")
         return jsonify({'success': False, 'error': 'Failed to delete truck'})
+
+@trucks_bp.route('/get_file/<truck_id>')
+@login_required
+def get_file(truck_id):
+    try:
+        truck = trucks_collection.find_one({'_id': ObjectId(truck_id)})
+        if truck and truck['file_data']:
+            return send_file(BytesIO(truck['file_data']),
+                             download_name=truck['file_name'],
+                             mimetype=truck['file_mimetype'],
+                             as_attachment=True)
+        else:
+            return "File not found", 404
+    except Exception as e:
+        logging.error(f"Error getting file: {e}")
+        return "Error getting file", 500
